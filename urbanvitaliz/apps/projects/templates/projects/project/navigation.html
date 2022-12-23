@@ -1,12 +1,18 @@
 {% load static %}
 {% load sass_tags %}
 
+{% load django_vite %}
+
+{% block js %}
+    {% vite_asset 'js/apps/projectNavigation.js' %}
+{% endblock %}
+
 {% block css %}
 <link href="{% sass_src 'home/css/dsfr/marianne.css' %}" rel="stylesheet" type="text/css">
 <link href="{% sass_src 'projects/css/project_navigation.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-<ul class="project-navigation d-flex align-items-center"
+<ul x-data="ProjectNavigation" x-ref="navigation" class="project-navigation d-flex align-items-center"
     style="font-family: 'Marianne', arial, sans-serif; padding: 0;">
     <li>
         <a class="{% if overview %} active {% endif %}" href="{% url 'projects-project-detail-overview' project.pk %}">

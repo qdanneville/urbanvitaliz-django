@@ -1,3 +1,8 @@
+body,
+main {
+    overflow-x: initial !important;
+}
+
 .arrow-link {
     transition-property: transform;
     transition-duration: 0.3s;

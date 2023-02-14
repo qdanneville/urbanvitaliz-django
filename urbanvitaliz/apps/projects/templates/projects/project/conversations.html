@@ -1,5 +1,7 @@
 {% extends "projects/project/detail.html" %}
 
+{% load guardian_tags %}
+
 {% load static %}
 {% load humanize %}
 {% load gravatar %}
@@ -20,6 +22,7 @@
 {% challenge_for request.user "project-conversation-writer" as challenge %}
 
 <div class="col-12 mx-auto">
+    {% get_obj_perms user for project as "permissions" %}
     {% include 'projects/project/navigation.html' with conversation=True %}
     <div class="row">
         <div class="col-12 col-lg-8">
@@ -68,7 +71,7 @@
                 </ul>
             </div>
 
-            {% if can_manage %}
+            {% if "use_public_notes" in permissions %}
             <hr/>
 
             <!-- Post message -->

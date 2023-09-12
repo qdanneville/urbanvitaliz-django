@@ -1,0 +1,13 @@
+<!-- un template de base qui importe django vite et des assets JS -->
+
+{% load django_vite %}
+
+{% block js %}
+    {% vite_asset 'js/apps/testApp.js' %}
+{% endblock %}
+
+
+<!-- j'initialise le composant TestApp -->
+<div x-data="TestApp" class="py-4 m-4 bg-red w-100">
+    <h1 @click="(e) => handleClick(e)">test</h1>
+</div>

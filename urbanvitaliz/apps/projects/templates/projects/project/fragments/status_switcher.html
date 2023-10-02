@@ -52,7 +52,7 @@
                 </li>
                 <li x-bind:style="activeStatus($store.taskModal.currentTask, STATUSES.DONE) && { pointerEvents: 'none' }">
                     <a @click="handleStatusWithCommentClick($store.taskModal.currentTask, STATUSES.DONE)"
-                       :class="activeStatus($store.taskModal.currentTask, STATUSES.DONE) || activeStatus($store.taskModal.currentTask, STATUSES.ALREADY_DONE)">
+                       :class="activeStatus($store.taskModal.currentTask, STATUSES.DONE)">
                         Fait
                     </a>
                 </li>

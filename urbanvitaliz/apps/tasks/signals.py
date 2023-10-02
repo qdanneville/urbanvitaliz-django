@@ -29,7 +29,6 @@ action_visited = django.dispatch.Signal()
 action_not_interested = django.dispatch.Signal()
 action_blocked = django.dispatch.Signal()
 action_inprogress = django.dispatch.Signal()
-action_already_done = django.dispatch.Signal()
 action_done = django.dispatch.Signal()
 action_undone = django.dispatch.Signal()
 action_commented = django.dispatch.Signal()
@@ -102,17 +101,6 @@ def log_action_blocked(sender, task, project, user, **kwargs):
         action.send(
             user,
             verb=verbs.Recommendation.STANDBY,
-            action_object=task,
-            target=project,
-        )
-
-
-@receiver(action_already_done)
-def log_action_already_done(sender, task, project, user, **kwargs):
-    if not is_staff_for_site(user):
-        action.send(
-            user,
-            verb=verbs.Recommendation.ALREADY_DONE,
             action_object=task,
             target=project,
         )
@@ -253,7 +241,6 @@ def set_task_status_when_followup_is_issued(sender, instance, created, **kwargs)
     task_status_signals = {
         models.Task.INPROGRESS: action_inprogress,
         models.Task.DONE: action_done,
-        models.Task.ALREADY_DONE: action_already_done,
         models.Task.NOT_INTERESTED: action_not_interested,
         models.Task.BLOCKED: action_blocked,
     }

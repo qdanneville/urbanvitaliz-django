@@ -46,8 +46,7 @@ document_uploaded = django.dispatch.Signal()
 
 @receiver(project_submitted)
 def log_project_submitted(sender, site, submitter, project, **kwargs):
-    # FIXME log user submitted_by project
-    action.send(project, verb=verbs.Project.SUBMITTED)
+    action.send(sender=submitter, verb=verbs.Project.SUBMITTED_BY, target=project)
 
 
 @receiver(project_submitted)

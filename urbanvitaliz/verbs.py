@@ -33,7 +33,6 @@ class Recommendation:
     SEEN = "a consulté la recommandation"
     NOT_APPLICABLE = "a classé la recommandation comme «non applicable»"
     NOT_INTERESTED = "n'est pas intéressé·e par la recommandation"  # ^
-    ALREADY_DONE = "a déjà fait l'action recommandée"  # FIXME to keep?
     IN_PROGRESS = "a classé la recommandation comme «en cours»"
     STANDBY = "a classé la recommandation comme «en attente»"
     # STUCK is replaced by STANDBY

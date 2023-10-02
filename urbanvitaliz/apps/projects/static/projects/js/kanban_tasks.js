@@ -4,7 +4,6 @@ const STATUSES = {
   BLOCKED: 2,
   DONE: 3,
   NOT_INTERESTED: 4,
-  ALREADY_DONE: 5,
 }
 
 function boardTasksApp(projectId) {
@@ -101,7 +100,7 @@ function boardTasksApp(projectId) {
       { status: STATUSES.PROPOSED, title: "Nouvelles ", color_class: "border-primary" },
       { status: STATUSES.INPROGRESS, title: "En cours", color_class: "border-secondary" },
       { status: STATUSES.BLOCKED, title: "En attente", color_class: "border-warning" },
-      { status: [STATUSES.DONE, STATUSES.NOT_INTERESTED, STATUSES.ALREADY_DONE], title: "Archivées", color_class: "border-error" },
+      { status: [STATUSES.DONE, STATUSES.NOT_INTERESTED], title: "Archivées", color_class: "border-error" },
     ],
 
     isSwitchtender: false,
@@ -379,7 +378,6 @@ function editReminderUrl(taskId) {
 function isArchivedStatus(status) {
   return status === STATUSES.DONE
     || status === STATUSES.NOT_INTERESTED
-    || status === STATUSES.ALREADY_DONE
 }
 
 function isStatusUpdate(followup) {
@@ -391,8 +389,7 @@ const STATUS_TEXT = {
   1: "en cours",
   2: "en attente",
   3: "faite",
-  4: "non applicable",
-  5: "faite" // ALREADY_DONE: Legacy status, kind of
+  4: "non applicable"
 }
 function statusText(status) {
   return STATUS_TEXT[status];

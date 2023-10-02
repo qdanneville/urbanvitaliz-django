@@ -393,31 +393,6 @@ def test_refuse_task_for_project_and_redirect_for_project_owner(request, client)
     assert response.status_code == 302
 
 
-@pytest.mark.django_db
-def test_already_done_task_for_project_and_redirect_for_project_owner(request, client):
-    user = baker.make(auth.User)
-
-    project = Recipe(
-        project_models.Project,
-        status="READY",
-        sites=[get_current_site(request)],
-    ).make()
-
-    task = Recipe(
-        models.Task, site=get_current_site(request), project=project, visited=False
-    ).make()
-
-    utils.assign_collaborator(user, project)
-
-    with login(client, user=user):
-        response = client.post(
-            reverse("projects-already-done-task", args=[task.id]),
-        )
-    task = models.Task.on_site.all()[0]
-    assert task.status == models.Task.ALREADY_DONE
-    assert response.status_code == 302
-
-
 #
 # update
 

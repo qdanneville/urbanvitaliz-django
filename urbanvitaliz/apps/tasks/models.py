@@ -66,19 +66,11 @@ class TaskManager(OrderedModelManager):
     def not_interested(self):
         return self.filter(status=Task.NOT_INTERESTED)
 
-    def already_done(self):
-        return self.filter(status=Task.ALREADY_DONE)
-
     def done(self):
         return self.filter(status=Task.DONE)
 
-    def done_or_already_done(self):
-        return self.filter(Q(status=Task.DONE) | Q(status=Task.ALREADY_DONE))
-
     def closed(self):
-        return self.filter(
-            status__in=(Task.DONE, Task.ALREADY_DONE, Task.NOT_INTERESTED)
-        )
+        return self.filter(status__in=(Task.DONE, Task.NOT_INTERESTED))
 
 
 class TaskOnSiteManager(CurrentSiteManager, TaskManager):
@@ -112,7 +104,6 @@ class Task(OrderedModel):
     BLOCKED = 2
     DONE = 3
     NOT_INTERESTED = 4
-    ALREADY_DONE = 5
 
     STATUS_CHOICES = (
         (PROPOSED, "proposé"),
@@ -120,7 +111,6 @@ class Task(OrderedModel):
         (BLOCKED, "blocage"),
         (DONE, "terminé"),
         (NOT_INTERESTED, "pas intéressé·e"),
-        (ALREADY_DONE, "déjà fait"),
     )
 
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
@@ -131,7 +121,7 @@ class Task(OrderedModel):
 
     @property
     def closed(self):
-        return self.status in [Task.DONE, Task.NOT_INTERESTED, Task.ALREADY_DONE]
+        return self.status in [Task.DONE, Task.NOT_INTERESTED]
 
     @property
     def open(self):
@@ -259,7 +249,6 @@ class TaskFollowup(models.Model):
             Task.BLOCKED: "bloquée",
             Task.DONE: "terminée",
             Task.NOT_INTERESTED: "pas intéressé",
-            Task.ALREADY_DONE: "déjà faite",
         }.get(self.status, "?")
 
     timestamp = models.DateTimeField(default=timezone.now)

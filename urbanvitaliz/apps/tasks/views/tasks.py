@@ -225,24 +225,6 @@ def refuse_task(request, task_id):
 
 
 @login_required
-def already_done_task(request, task_id):
-    """Mark task refused for a project"""
-    task = get_object_or_404(models.Task, site=request.site, pk=task_id)
-
-    has_perm_or_403(request.user, "projects.use_tasks", task.project)
-
-    if request.method == "POST":
-        task.status = models.Task.ALREADY_DONE
-        task.save()
-        api.remove_reminder_email(task)
-        signals.action_already_done.send(
-            sender=already_done_task, task=task, project=task.project, user=request.user
-        )
-
-    return redirect(reverse("projects-project-detail-actions", args=[task.project_id]))
-
-
-@login_required
 def sort_task(request, task_id, order):
     """Update an existing task for a project"""
     task = get_object_or_404(models.Task, site=request.site, pk=task_id)
@@ -512,10 +494,7 @@ def followup_task(request, task_id=None):
 
             followup.save()
 
-            if followup.status in (
-                models.Task.ALREADY_DONE,
-                models.Task.NOT_INTERESTED,
-            ):
+            if followup.status == models.Task.NOT_INTERESTED:
                 remove_reminder(task, task.project.owner)
             else:
                 # Create or reset 6 weeks reminder
@@ -569,7 +548,6 @@ def rsvp_followup_task(request, rsvp_id=None, status=None):
     rsvp_signals = [
         models.Task.INPROGRESS,
         models.Task.DONE,
-        models.Task.ALREADY_DONE,
         models.Task.NOT_INTERESTED,
         models.Task.BLOCKED,
     ]

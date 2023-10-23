@@ -27,7 +27,7 @@ from django.db import migrations, transaction
 #         for task in TaskModel.objects.all():
 #             if task.status == Task.DONE:
 #                 task.done = True
-#             elif task.status == Task.NOT_INTERESTED or task.status == Task.ALREADY_DONE:
+#             elif task.status == Task.NOT_INTERESTED:
 #                 task.refused = True
 #
 #             task.save()

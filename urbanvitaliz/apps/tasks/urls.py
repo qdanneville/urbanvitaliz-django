@@ -67,11 +67,6 @@ urlpatterns = [
         name="projects-refuse-task",
     ),
     path(
-        r"task/<int:task_id>/already/",
-        tasks.already_done_task,
-        name="projects-already-done-task",
-    ),
-    path(
         r"task/<int:task_id>/delete/",
         tasks.delete_task,
         name="projects-delete-task",

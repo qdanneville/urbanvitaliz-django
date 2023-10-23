@@ -4,7 +4,6 @@ const STATUSES = {
     BLOCKED: 2,
     DONE: 3,
     NOT_INTERESTED: 4,
-    ALREADY_DONE: 5,
 }
 
 function taskUrl(projectId, taskId) {
@@ -58,7 +57,6 @@ function editReminderUrl(taskId) {
 function isArchivedStatus(status) {
     return status === STATUSES.DONE
         || status === STATUSES.NOT_INTERESTED
-        || status === STATUSES.ALREADY_DONE
 }
 
 function isStatusUpdate(followup) {
@@ -71,7 +69,6 @@ const STATUS_TEXT = {
     2: "en attente",
     3: "faite",
     4: "non applicable",
-    5: "faite" // ALREADY_DONE: Legacy status, kind of
 }
 
 function statusText(status) {

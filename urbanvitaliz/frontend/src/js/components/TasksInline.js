@@ -9,7 +9,7 @@ export default function TasksInline(projectId) {
         filterIsDraft: false,
         boardsFiltered: [],
         boards: [
-            { status: [TASK_STATUSES.PROPOSED,TASK_STATUSES.INPROGRESS,TASK_STATUSES.BLOCKED,TASK_STATUSES.DONE,TASK_STATUSES.NOT_INTERESTED,TASK_STATUSES.ALREADY_DONE], title: "Nouvelles", color_class: "border-error", color: "#0d6efd" },
+            { status: [TASK_STATUSES.PROPOSED,TASK_STATUSES.INPROGRESS,TASK_STATUSES.BLOCKED,TASK_STATUSES.DONE,TASK_STATUSES.NOT_INTERESTED], title: "Nouvelles", color_class: "border-error", color: "#0d6efd" },
         ],
         init() {
             this.boardsFiltered = this.boards
@@ -29,7 +29,7 @@ export default function TasksInline(projectId) {
         },
         updateView() {
             if (!this.filterIsDraft) return
-            
+
             return this.data = this.data.filter((d) => d.public == !this.filterIsDraft);
         },
         filterTaskByTopic(topic) {
